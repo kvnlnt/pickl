@@ -72,7 +72,8 @@ Pickl.prototype.renderFieldsets = function(){
 			var fieldW = layout.fieldsets[i].fields[j].width;
 			var fieldGroup = fieldsetGroup.g().attr({ 'class':'button field', 'transform':'translate('+fieldX+','+fieldY+')' });
 			var fieldTarget = fieldGroup.rect(0,0,fieldW,40).attr({ 'class':'touchTarget' });
-			var fieldName = fieldGroup.text(fieldW/2,20,field.values[field.selected]);
+			var fieldName = fieldGroup.text(fieldW/2,20,'');
+			fieldName.node.innerHTML = field.values[field.selected];
 			fieldGroup.click(function(){ that.displayNext(field, fieldName) }, that);
 
 		});
