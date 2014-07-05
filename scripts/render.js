@@ -11,7 +11,8 @@ Pickl.prototype.render = function(){
 Pickl.prototype.renderForm = function(){
 
 	var form = null === this.svg ? Snap(this.form.width, this.form.height) : this.svg;
-	form.attr({ 'class':'pickl' });
+	var klass = form.attr('class') + ' pickl';
+	form.attr({ 'class':klass });
 
 	return form;
 

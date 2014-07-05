@@ -9,5 +9,6 @@ Pickl.prototype.save = function(){
 	});
 	
 	this.callback(picks);
+	this.pickl.remove();
 
 };

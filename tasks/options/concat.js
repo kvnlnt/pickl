@@ -3,7 +3,7 @@ module.exports = {
       separator: ';',
     },
     dist: {
-      src: ['scripts/calculations.js','scripts/displays.js','scripts/fixtures.js','scripts/pickl.js','scripts/render.js','scripts/save.js'],
+      src: ['scripts/fixtures.js','scripts/pickl.js','scripts/render.js','scripts/calculations.js','scripts/displays.js','scripts/save.js'],
       dest: 'dist/pickl.js',
     },
 }
