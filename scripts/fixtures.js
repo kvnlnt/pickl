@@ -1,4 +1,4 @@
-var Fixture = (function(){
+Pickl.prototype.Fixture = (function(){
 
 	var config = {};
 	config.title = 'Options';

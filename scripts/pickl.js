@@ -4,7 +4,7 @@ var Pickl = function(options){
 
 	    var defaults = {};
 	    	defaults.form = { width:300, height:500 };
-	    	defaults.config = Fixture;
+	    	defaults.config = this.Fixture;
 	    	defaults.svg = null;
 	    	defaults.callback = function(picks){ console.log(picks); };
 
