@@ -3,7 +3,7 @@ var Pickl = function(options){
 	// DEFAULTS
 
 	    var defaults = {};
-	    	defaults.form = { width:300, height:500 };
+	    	defaults.form = { width:320, height:520 };
 	    	defaults.config = this.Fixture;
 	    	defaults.svg = null;
 	    	defaults.callback = function(picks){ console.log(picks); };
