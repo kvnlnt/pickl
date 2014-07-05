@@ -37,13 +37,15 @@ Pickl.prototype.renderTitle = function(){
 
 Pickl.prototype.renderClose = function(){
 
-	var close = this.pickl.g().attr('class','close');
+	var close = this.pickl.g().attr('class','button close');
 	var x = this.form.width * .15 / 2;
 	var y = this.form.height - 70;
 	var w = this.form.width * .85;
 	var h = 50;
-	var target = close.rect(x,y,w,h).attr({ 'fill':'#CCCCCC' });
+	var target = close.rect(x,y,w,h).attr({ 'class':'touchTarget' });
 	var text = close.text(this.form.width/2, y + 25, 'close');
+
+	close.click(this.save, this);
 
 	return close;
 
@@ -67,9 +69,10 @@ Pickl.prototype.renderFieldsets = function(){
 			var fieldX = layout.fieldsets[i].fields[j].x;
 			var fieldY = layout.fieldsets[i].fields[j].y + 20;
 			var fieldW = layout.fieldsets[i].fields[j].width;
-			var fieldGroup = fieldsetGroup.g().attr({ 'class':'field', 'transform':'translate('+fieldX+','+fieldY+')' });
-			var fieldTarget = fieldGroup.rect(0,0,fieldW,40).attr({ 'fill':'#FFFFFF', 'stroke':'#000000' });
-			var fieldName = fieldGroup.text(fieldW/2,22.5,field.values[field.selected]);
+			var fieldGroup = fieldsetGroup.g().attr({ 'class':'button field', 'transform':'translate('+fieldX+','+fieldY+')' });
+			var fieldTarget = fieldGroup.rect(0,0,fieldW,40).attr({ 'class':'touchTarget' });
+			var fieldName = fieldGroup.text(fieldW/2,20,field.values[field.selected]);
+			fieldGroup.click(function(){ that.displayNext(field, fieldName) }, that);
 
 		});
 

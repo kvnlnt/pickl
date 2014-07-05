@@ -27,6 +27,8 @@
 	font-family:'FontAwesome';
 	cursor: pointer;
 	text-transform: uppercase;
+	fill:#e2e2e2;
+	font-size: 0.9rem;
 }
 
 .pickl .button:hover {
@@ -35,4 +37,5 @@
 
 .pickl .button .touchTarget {
 	fill:#999999;
+	stroke:#e2e2e2;
 }
