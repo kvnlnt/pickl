@@ -2,11 +2,12 @@ var Pickl = function(options){
 
 	// DEFAULTS
 
-	    var defaults = {};
-	    	defaults.form = { width:320, height:520 };
-	    	defaults.config = this.Fixture;
-	    	defaults.svg = null;
-	    	defaults.callback = function(picks){ console.log(picks); };
+	    var defaults      = {};
+	    defaults.form     = { width:320, height:520 };
+	    defaults.config   = this.Config;
+	    defaults.theme    = this.Config.themes.plain;
+	    defaults.svg      = null;
+	    defaults.callback = function(picks){ console.log(picks); };
 
     // SETTINGS
     

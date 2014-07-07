@@ -10,6 +10,10 @@
 	font-size: 1rem;
 }
 
+.pickl .title {
+	text-transform: uppercase;
+}
+
 .pickl .hide {
 	display: none;
 }
@@ -17,6 +21,7 @@
 .pickl text {
 	alignment-baseline:central;
     text-anchor:middle;
+    pointer-events:none;
 }
 
 .pickl .title {
@@ -24,21 +29,23 @@
 }
 
 .pickl .button {
-	font-family:'FontAwesome';
 	cursor: pointer;
-	fill:#e2e2e2;
-	font-size: 0.9rem;
-}
-
-.pickl .button:hover {
-	fill:#FFFFFF;
-}
-
-.pickl .button .touchTarget {
-	fill:#999999;
-	stroke:#e2e2e2;
+	font-size: 0.85rem;
 }
 
 .pickl .button.close {
 	text-transform: uppercase;
+}
+
+.pickl .button.arrow .touchTarget {
+	stroke:none;
+}
+
+.pickl .field {
+	font-size: 0.85rem;
+}
+
+.pickl .field > .arrow {
+	font-family:'FontAwesome';
+	font-size: 1.25rem;
 }

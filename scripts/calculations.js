@@ -15,8 +15,8 @@ Pickl.prototype.calcFieldsets = function(){
 	var fieldsets = _.map(this.config.fieldsets, function(fieldset, y){
 
 		var fieldWidth = (that.form.width * .85) / fieldset.fields.length;
-		var startX = (that.form.width * .15)/2;
-		var fields = _.map(fieldset.fields, function(field, x){
+		var startX     = (that.form.width * .15)/2;
+		var fields     = _.map(fieldset.fields, function(field, x){
 
 			return {
 				width:fieldWidth,
