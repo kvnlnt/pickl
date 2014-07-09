@@ -7,6 +7,6 @@ Pickl.prototype.save = function(){
 	});
 	
 	this.callback(picks);
-	this.pickl.remove();
+	this.pickl.animate({ 'transform':'translate('+this.form.width+',0)'}, 200, mina.easein);
 
 };

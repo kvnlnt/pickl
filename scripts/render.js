@@ -6,7 +6,6 @@ Pickl.prototype.render = function(){
 	this.pickl.title      = this.renderTitle();
 	this.pickl.close      = this.renderClose();
 	this.pickl.fields     = this.renderFields();
-	// this.pickl.selectors  = this.renderSelectors();
 
 };
 
@@ -14,7 +13,7 @@ Pickl.prototype.renderForm = function(){
 
 	var form = null === this.svg ? Snap(this.form.width, this.form.height) : this.svg;
 	var klass = form.attr('class') + ' pickl';
-	form.attr({ 'class':klass });
+	form.attr({ 'class':klass, 'transform':'translate('+this.form.width+',0)' });
 
 	return form;
 
@@ -107,10 +106,10 @@ Pickl.prototype.renderOptions = function(fieldIndex){
 	var options     = this.pickl.g().attr({ 'class':'options' });
 	var config      = this.config.fields[fieldIndex];
 	var background  = options.rect(0,0,that.form.width, that.form.height).attr('class','background');
-	var title       = options.text(that.form.width/2, 50, config.name).attr('class','title');
+	var title       = options.text(that.form.width/2, 27, config.name).attr('class','title options');
 	var fields      = options.g().attr({ 'class':'fields' });
 	var selected    = config.values[config.selected];
-	var y           = 90;
+	var y           = 50;
 	var x           = layout.x - 1;
 	var field       = this.pickl.fields[fieldIndex];
 

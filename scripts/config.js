@@ -23,7 +23,7 @@ Pickl.prototype.Config = (function(){
 
 	var f3        = {};
 	f3.name       = 'Strings';
-	f3.values     = [6,5,4,2,1,100,10,12,13,14,15,16];
+	f3.values     = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 	f3.selected   = 0;
 
 	var config    = {};

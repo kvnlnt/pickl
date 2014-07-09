@@ -15,6 +15,11 @@
 	font-size: 1.5rem;
 }
 
+.pickl .title.options {
+	font-size: .7rem;
+	opacity: 0.5;
+}
+
 .pickl .hide {
 	display: none;
 }

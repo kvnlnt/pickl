@@ -19,22 +19,13 @@
     <h1>Pickl</h1>
     <script type="text/javascript">
 
-    // create instance
-    var svg = new Snap(320,520);
-    var cb = function(values){ console.log('values', values); };
+        // create instance
+        var svg       = new Snap(320,520);
+        var cb        = function(values){ console.log('values', values); };
+        var launch    = svg.rect(0,0,100,50).click(function(){pickl.display();}, this);
+        var container = svg.g();
+        var pickl     = new Pickl({  svg:container, callback:cb });
     
-    // var launch = svg.rect(0,0,100,50).click(function(){
-
-    //     var container = svg.g();
-    //     var pickl = new Pickl({ 
-    //         svg:container,
-    //         callback:cb
-    //     });
-
-    // }, this);
-
-    var pickl = new Pickl({ svg:svg, callback:cb });
-
     </script>
 </body>
 
