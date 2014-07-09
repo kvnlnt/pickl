@@ -11,19 +11,25 @@ Pickl.prototype.Config = (function(){
 	themes.plain.buttonStroke        = '#e2e2e2';
 	themes.plain.modalBackground     = '#f2f2f2';
 
-	var orientationField             = {};
-	orientationField.name            = 'orientation';
-	orientationField.values          = ['righty','lefty',1,2,3,4,5,6,7,8,9,10];
-	orientationField.selected        = 0;
+	var f1        = {};
+	f1.name       = 'Orientation';
+	f1.values     = ['righty','lefty',1,2,3];
+	f1.selected   = 0;
 
-	var orientationFieldSet          = {};
-	orientationFieldSet.name         = 'Orientation';
-	orientationFieldSet.fields       = [orientationField];
+	var f2        = {};
+	f2.name       = 'Instrument';
+	f2.values     = ['guitar','banjo','ukelele'];
+	f2.selected   = 0;
 
-	var config                       = {};
-	config.themes                    = themes;
-	config.title                     = 'Options';
-	config.fieldsets                 = [orientationFieldSet];
+	var f3        = {};
+	f3.name       = 'Strings';
+	f3.values     = [6,5,4];
+	f3.selected   = 0;
+
+	var config    = {};
+	config.themes = themes;
+	config.title  = 'Options';
+	config.fields = [f1, f2, f3];
 
 	return config;
 

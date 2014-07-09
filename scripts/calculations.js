@@ -1,39 +1,22 @@
 Pickl.prototype.calcLayout = function(){
 
 	var layout = {};
-	layout.fieldsets = this.calcFieldsets();
+	layout.fields = this.calcFields();
 
 	return layout;
 
 };
 
-Pickl.prototype.calcFieldsets = function(){
+Pickl.prototype.calcFields = function(){
 
-	var that = this;
-	var fieldsetHeight = 90;
+	var height = 40;
+	var width  = this.form.width * .85;
+	var x      = this.form.width * .15/2;
 
-	var fieldsets = _.map(this.config.fieldsets, function(fieldset, y){
-
-		var fieldWidth = (that.form.width * .85) / fieldset.fields.length;
-		var startX     = (that.form.width * .15)/2;
-		var fields     = _.map(fieldset.fields, function(field, x){
-
-			return {
-				width:fieldWidth,
-				x:startX + (fieldWidth * x),
-				y:0
-			}
-
-		});
-
-		return { 
-			x:0,
-			y:fieldsetHeight * y,
-			fields:fields
-		}
-
-	});
-
-	return fieldsets;
+	return {
+		height:height,
+		width:width,
+		x:x
+	}
 
 };

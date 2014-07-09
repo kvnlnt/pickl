@@ -5,7 +5,8 @@ Pickl.prototype.render = function(){
 	this.pickl.background = this.renderBackground();
 	this.pickl.title      = this.renderTitle();
 	this.pickl.close      = this.renderClose();
-	this.pickl.fieldsets  = this.renderFieldsets();
+	this.pickl.fields     = this.renderFields();
+	// this.pickl.selectors  = this.renderSelectors();
 
 };
 
@@ -27,7 +28,7 @@ Pickl.prototype.renderTheme = function(){
 		theme.append('.pickl .background { fill: '+this.theme.background+'; }');
 		theme.append('.pickl .fieldset { fill: '+this.theme.fieldset+'; }');
 
-		theme.append('.pickl .button > .touchTarget, .pickl .field > .touchTarget { fill: '+this.theme.touchTarget+'; }');
+		theme.append('.pickl .button > .touchTarget, .pickl .field .touchTarget { fill: '+this.theme.touchTarget+'; }');
 		theme.append('.pickl .button > .touchTarget { stroke: '+this.theme.buttonStroke+'; }');
 		theme.append('.pickl .button:hover .touchTarget { fill: '+this.theme.touchTargetOver+'; }');
 		theme.append('.pickl .button:hover text { fill: '+this.theme.buttonTextColorOver+'; }');
@@ -76,46 +77,67 @@ Pickl.prototype.renderClose = function(){
 
 };
 
-Pickl.prototype.renderFieldsets = function(){
+Pickl.prototype.renderFields = function(){
 
-	var that      = this;
-	var layout    = this.calcLayout();
-	var fieldsets = this.pickl.g().attr('class','fieldsets');
+	var that   = this;
+	var layout = this.calcLayout().fields;
+	var fields = this.pickl.g().attr('class','fields');
+	var y      = 90;
 
-	_.each(this.config.fieldsets, function(fieldset, i){
+	_.each(this.config.fields, function(field, i){
 
-		var fieldsetX     = layout.fieldsets[i].x;
-		var fieldsetY     = layout.fieldsets[i].y + 100;
-		var fieldsetGroup = fieldsets.g().attr({ 'class':'fieldset', 'transform':'translate('+fieldsetX+','+fieldsetY+')' });
-		var fieldsetTitle = fieldsetGroup.text(that.form.width/2,0,fieldset.name);
+		var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+layout.x+','+y+')' });
+		var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
+		var fieldTitle  = fieldGroup.text(layout.x + 70,20, field.name).attr({ 'class':'title' });
+		var fieldValue  = fieldGroup.text(layout.x + 80, 20, field.values[field.selected]).attr('class','value');		
+		y 			   += 41;
 
-		_.each(fieldset.fields, function(field, j){
-
-			var fieldX               = layout.fieldsets[i].fields[j].x;
-			var fieldY               = layout.fieldsets[i].fields[j].y + 25;
-			var fieldW               = layout.fieldsets[i].fields[j].width;
-			var fieldGroup           = fieldsetGroup.g().attr({ 'class':'field', 'transform':'translate('+fieldX+','+fieldY+')' });
-			var fieldTarget          = fieldGroup.rect(0,0,fieldW,40).attr({ 'class':'touchTarget' });
-			var fieldName            = fieldGroup.text(fieldW/2,20,'');
-
-			var fieldPrev            = fieldGroup.g().attr({ 'class':'button arrow' });
-			var fieldPrevTarget      = fieldPrev.rect(0,0,40,40).attr({ 'class':'touchTarget' });
-			var fieldPrevArrow       = fieldPrev.text(20,20,'');
-			fieldPrevArrow.node.innerHTML = '&#xf104';
-
-			var fieldNext            = fieldGroup.g().attr({ 'class':'button arrow' });
-			var fieldNextTarget      = fieldNext.rect(fieldW-40,0,40,40).attr({ 'class':'touchTarget' });
-			var fieldNextArrow       = fieldNext.text(fieldW-20,20,'');
-			fieldNextArrow.node.innerHTML = '&#xf105';
-
-			fieldName.node.innerHTML = field.values[field.selected];
-			fieldNext.click(function(){ that.displayNext(field, fieldName) }, that);
-			fieldPrev.click(function(){ that.displayPrev(field, fieldName) }, that);
-
-		});
+		fieldGroup.click(function(){that.displayOptions(i)},that);
 
 	});
 
-	return fieldsets.selectAll('.fieldset');
+	return fields.selectAll('.field');
+
+};
+
+Pickl.prototype.renderOptions = function(fieldIndex){
+
+	var that       = this;
+	var options    = this.pickl.g().attr({ 'class':'options'});
+	var config     = this.config.fields[fieldIndex];
+	var background = options.rect(0,0,that.form.width, that.form.height).attr('class','background');
+	var title      = options.text(that.form.width/2, 50, config.name).attr('class','title');
+	var fields     = options.g().attr({ 'class':'fields' });
+	var selected   = config.values[config.selected];
+	var layout     = that.calcLayout().fields;
+	var y          = 90;
+	var field      = this.pickl.fields[fieldIndex];
+
+	options.attr({ 'transform':'translate('+this.form.width+',0)' });
+
+	// option fields
+	_.each(config.values, function(value, i){
+
+		var fieldGroup  = fields.g().attr({ 'class':'field', 'transform':'translate('+layout.x+','+y+')' });
+		var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
+		var fieldText   = fieldGroup.text(40,20, value).attr({ 'class':'value' });
+		var klass       = value === selected ? 'check selected' : 'check';
+		var check       = fieldGroup.g().attr({ 'class':klass});
+		var checkTarget = check.rect(0,0,40,40).attr({ 'class':'touchTarget' });
+		var checkMark   = check.text(10,20,'*').attr({ 'class':'value' });
+
+		checkMark.node.innerHTML = '&#xf00c';
+		y += 41;
+
+		check.click(function(){ 
+			config.selected = i;
+			options.remove();
+			that.pickl.fields[fieldIndex].select('.value').node.textContent = value;
+		}, that);
+
+	});
+
+	return options;
+
 
 };
