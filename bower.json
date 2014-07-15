@@ -1,6 +1,7 @@
 {
   "name": "pickl",
   "version": "0.0.0",
+  "main":"dist/pickl.js",
   "homepage": "https://github.com/kvnlnt/pickl",
   "authors": [
     "kvnlnt <kvnlnt@yahoo.com>"
