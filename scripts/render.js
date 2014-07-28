@@ -19,23 +19,26 @@ Pickl.prototype.renderForm = function(){
 
 };
 
+
 Pickl.prototype.renderTheme = function(){
 
+	// remove if present
+	$(".picklTheme").remove();
+
+	// now create it
 	var theme = $('<style>');
 		theme.attr('type','text/css');
 		theme.attr('class','picklTheme');
 		theme.append('.pickl .background { fill: '+this.theme.background+'; }');
 		theme.append('.pickl .fieldset { fill: '+this.theme.fieldset+'; }');
-
+		theme.append('.pickl .title { fill: '+this.theme.titleColor+';}');
+		theme.append('.pickl .field text, .close text { fill:'+this.theme.buttonTextColor+'}');
 		theme.append('.pickl .button > .touchTarget, .pickl .field .touchTarget { fill: '+this.theme.touchTarget+'; }');
 		theme.append('.pickl .button > .touchTarget { stroke: '+this.theme.buttonStroke+'; }');
-		theme.append('.pickl .button:hover .touchTarget { fill: '+this.theme.touchTargetOver+'; }');
+		theme.append('.pickl .button:hover .touchTarget { fill: '+this.theme.touchTargetOver+'; cursor:pointer; }');
 		theme.append('.pickl .button:hover text { fill: '+this.theme.buttonTextColorOver+'; }');
-
 		theme.append('.pickl .button > .arrow > .touchTarget { fill: '+this.theme.touchTarget+' }');
 		
-		
-
 	$('head').append(theme);
 
 	return theme;

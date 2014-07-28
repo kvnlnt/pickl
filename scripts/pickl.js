@@ -5,7 +5,7 @@ var Pickl = function(options){
 	    var defaults      = {};
 	    defaults.form     = { width:320, height:520 };
 	    defaults.config   = this.Config;
-	    defaults.theme    = this.Config.themes.plain;
+	    defaults.theme    = this.Config.themes.zen;
 	    defaults.svg      = null;
 	    defaults.callback = function(picks){ console.log(picks); };
 

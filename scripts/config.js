@@ -10,6 +10,16 @@ Pickl.prototype.Config = (function(){
 	themes.plain.buttonTextColorOver = '#e2e2e2';
 	themes.plain.buttonStroke        = '#e2e2e2';
 	themes.plain.modalBackground     = '#f2f2f2';
+	themes.zen                       = {};
+	themes.zen.background            = '#000000';
+	themes.zen.fieldset              = '#666666';
+	themes.zen.touchTarget           = '#222222';
+	themes.zen.touchTargetOver       = '#444444';
+	themes.zen.titleColor            = '#FFFFFF';
+	themes.zen.buttonTextColor       = '#999999';
+	themes.zen.buttonTextColorOver   = '#FFFFFF';
+	themes.zen.buttonStroke          = '#333333';
+	themes.zen.modalBackground       = '#000000';
 
 	var f1        = {};
 	f1.name       = 'Orientation';
