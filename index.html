@@ -13,6 +13,7 @@
     <script type="text/javascript" src="scripts/calculations.js"></script>
     <script type="text/javascript" src="scripts/displays.js"></script>
     <script type="text/javascript" src="scripts/save.js"></script>
+    <script type="text/javascript" src="scripts/themes.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
         var launch    = svg.rect(0,0,100,50).click(function(){pickl.display();}, this);
         var container = svg.g();
         var pickl     = new Pickl({  svg:container, callback:cb });
-    
+        pickl.display();
     </script>
 </body>
 

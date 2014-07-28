@@ -5,7 +5,7 @@ var Pickl = function(options){
 	    var defaults      = {};
 	    defaults.form     = { width:320, height:520 };
 	    defaults.config   = this.Config;
-	    defaults.theme    = this.Config.themes.zen;
+	    defaults.theme    = 'zen';
 	    defaults.svg      = null;
 	    defaults.callback = function(picks){ console.log(picks); };
 
@@ -15,6 +15,7 @@ var Pickl = function(options){
 
     // INIT
 
+    	this.themeLoad();
     	this.render();
 
 };
