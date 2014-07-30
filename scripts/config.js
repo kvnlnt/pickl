@@ -1,23 +1,78 @@
 Pickl.prototype.Config = (function(){
 
-	var f1        = {};
-	f1.name       = 'Orientation';
-	f1.values     = ['righty','lefty'];
-	f1.selected   = 0;
+	var config = {
 
-	var f2        = {};
-	f2.name       = 'Instrument';
-	f2.values     = ['guitar','banjo','ukelele'];
-	f2.selected   = 0;
+		title:'Options',
+		fields:{
+			orientation:{
+				name:'orientation',
+				value:'righty',
+				enabled:true,
+				callback:null,
+				options:{
+					righty:{
+						name:'righty',
+						value:'RIGHTY'
+					},
+					lefty:{
+						name:'lefty',
+						value:'LEFTY'
+					}
+				}
+			},
+			instrument:{
+				name:'instrument',
+				value:'guitar',
+				enabled:true,
+				callback:null,
+				options:{
+					guitar:{
+						name:'guitar',
+						value:'GUITAR',
+						enable:'tuning_guitar',
+						disable:'tuning_banjo'
+					},
+					banjo:{
+						name:'banjo',
+						value:'BANJO',
+						disable:'tuning_guitar',
+						enable:'tuning_banjo'
+					}
+				}
+			},
+			tuning_guitar:{
+				name:'tuning',
+				value:'standard',
+				enabled:true,
+				options:{
+					standard:{
+						name:'standard',
+						value:'EADGBE'
+					},
+					drop_d:{
+						name:'drop d',
+						value:'DADGBE'
+					}
+				}
+			},
+			tuning_banjo:{
+				name:'tuning',
+				value:'standard',
+				enabled:false,
+				options:{
+					standard:{
+						name:'standard',
+						value:'EADG'
+					},
+					drop_d:{
+						name:'drop d',
+						value:'DADG'
+					}
+				}
+			}
+		}
 
-	var f3        = {};
-	f3.name       = 'Strings';
-	f3.values     = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
-	f3.selected   = 0;
-
-	var config    = {};
-	config.title  = 'Options';
-	config.fields = [f1, f2, f3];
+	};
 
 	return config;
 

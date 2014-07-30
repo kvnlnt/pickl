@@ -4,10 +4,22 @@ Pickl.prototype.display = function(){
 
 };
 
-Pickl.prototype.displayOptions = function(fieldIndex){
+Pickl.prototype.displayOptions = function(field){
 
-	// console.log(field);
-	var options = this.renderOptions(fieldIndex);
+	var options = this.renderOptions(field);
 	options.animate({'transform':'translate(0,0)'}, 200, mina.easin);
+
+};
+
+Pickl.prototype.displayField = function(fields, enabled){
+
+	var that = this;
+	var fields = "string" === typeof fields ? [fields] : fields;
+
+	_.each(fields,function(field){
+
+		if(void 0 !== that.config.fields[field]) that.config.fields[field].enabled = enabled;
+
+	});
 
 };

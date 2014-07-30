@@ -1,6 +1,7 @@
 Pickl.prototype.render = function(){
 
-	this.pickl            = this.renderForm();
+	this.pickl 		      = this.pickl || this.renderForm();
+	this.pickl.clear();
 	this.pickl.background = this.renderBackground();
 	this.pickl.title      = this.renderTitle();
 	this.pickl.close      = this.renderClose();
@@ -59,15 +60,20 @@ Pickl.prototype.renderFields = function(){
 	var fields = this.pickl.g().attr('class','fields');
 	var y      = 90;
 
-	_.each(this.config.fields, function(field, i){
+	_.each(this.config.fields, function(field){
 
-		var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+layout.x+','+y+')' });
-		var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
-		var fieldTitle  = fieldGroup.text(layout.x + 70,20, field.name).attr({ 'class':'title' });
-		var fieldValue  = fieldGroup.text(layout.x + 80, 20, field.values[field.selected]).attr('class','value');		
-		y 			   += 41;
+		if(field.enabled){
 
-		fieldGroup.click(function(){that.displayOptions(i)},that);
+			var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+layout.x+','+y+')' });
+			var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
+			var fieldTitle  = fieldGroup.text(layout.x + 70,20, field.name).attr({ 'class':'title' });
+			var fieldValue  = fieldGroup.text(layout.x + 80, 20, field.options[field.value].name).attr('class','value');		
+			y 			   += 41;
+
+			var click = void 0 === field.callback || null === field.callback ? function(){that.displayOptions(field)} : field.callback;
+			fieldGroup.click(click,that);
+
+		}
 
 	});
 
@@ -75,41 +81,40 @@ Pickl.prototype.renderFields = function(){
 
 };
 
-Pickl.prototype.renderOptions = function(fieldIndex){
+Pickl.prototype.renderOptions = function(field){
 
 	var that        = this;
 	var layout      = that.calcLayout().fields;
 	var options     = this.pickl.g().attr({ 'class':'options' });
-	var config      = this.config.fields[fieldIndex];
 	var background  = options.rect(0,0,that.form.width, that.form.height).attr('class','background');
-	var title       = options.text(that.form.width/2, 27, config.name).attr('class','title options');
+	var title       = options.text(that.form.width/2, 27, field.name).attr('class','title options');
 	var fields      = options.g().attr({ 'class':'fields' });
-	var selected    = config.values[config.selected];
+	var selected    = field.options[field.value].value;
 	var y           = 50;
 	var x           = layout.x - 1;
-	var field       = this.pickl.fields[fieldIndex];
 
 	options.attr({ 'transform':'translate('+this.form.width+',0)' });
 
 	// option fields
-	_.each(config.values, function(value, i){
+	_.each(field.options, function(option, k){
 
 		var fieldGroup  = fields.g().attr({ 'class':'field', 'transform':'translate('+x+','+y+')' });
-		var fieldTarget = fieldGroup.rect(0,0,layout.width/2, 40).attr({ 'class':'touchTarget' });
-		var fieldText   = fieldGroup.text(40,20, value).attr({ 'class':'value' });
-		var klass       = value === selected ? 'check selected' : 'check';
+		var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
+		var fieldText   = fieldGroup.text(40,20, option.name).attr({ 'class':'value' });
+		var klass       = option.value === selected ? 'check selected' : 'check';
 		var check       = fieldGroup.g().attr({ 'class':klass});
 		var checkTarget = check.rect(0,0,40,40).attr({ 'class':'touchTarget' });
 		var checkMark   = check.text(10,20,'*').attr({ 'class':'value' });
 
 		checkMark.node.innerHTML = '&#xf00c';
-		y = i % 2 === 0 ? y : y + 41;
-		x = i % 2 === 0 ? layout.width/2 + layout.x + 1 : layout.x - 1;
+		y += 41;
 
 		check.click(function(){ 
-			config.selected = i;
+			field.value = k;
 			options.animate({ 'transform':'translate('+this.form.width+',0)'}, 200, mina.easeout, function(){ this.remove(); });
-			that.pickl.fields[fieldIndex].select('.value').node.textContent = value;
+			that.displayField(option.disable, false);
+			that.displayField(option.enable, true);
+			that.render();
 		}, that);
 
 	});

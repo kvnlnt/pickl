@@ -3,7 +3,7 @@ Pickl.prototype.save = function(){
 	var picks = {};
 
 	_.each(this.config.fields, function(field){
-		picks[field.name] = field.values[field.selected];
+		if(field.enabled) picks[field.name] = field.options[field.value].value;
 	});
 	
 	this.callback(picks);
