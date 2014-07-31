@@ -83,31 +83,82 @@ Pickl.prototype.renderFields = function(){
 
 Pickl.prototype.renderOptions = function(field){
 
-	var that        = this;
-	var layout      = that.calcLayout().fields;
-	var options     = this.pickl.g().attr({ 'class':'options' });
-	var background  = options.rect(0,0,that.form.width, that.form.height).attr('class','background');
-	var title       = options.text(that.form.width/2, 27, field.name).attr('class','title options');
-	var fields      = options.g().attr({ 'class':'fields' });
-	var selected    = field.options[field.value].value;
-	var y           = 50;
-	var x           = layout.x - 1;
+	var that          = this;
+	var layout        = that.calcLayout().fields;
+	var options       = this.pickl.g().attr({ 'class':'options' });
+	var background    = options.rect(0,0,that.form.width, that.form.height).attr('class','background');
+	var title         = options.text(that.form.width/2, 27, field.name).attr('class','title options');
+	var fieldsHeight  = that.form.height-140;
+	var isClipping    = (_.size(field.options) * 40) > fieldsHeight;
+	var fieldHeight   = isClipping ? fieldsHeight/Math.floor(fieldsHeight/40) : 40;
+	var fieldMaskRect = options.rect(layout.x,50,layout.width, fieldsHeight + (Math.floor(fieldsHeight/40))).attr({'fill':'#FFFFFF'});
+	var fieldMask     = options.mask().add(fieldMaskRect).attr({'class':'mask'});
+	var fieldWrapper  = options.g().attr({ 'class':'fields', mask:fieldMask });
+	var fields        = fieldWrapper.g().data('y',0);
+	var selected      = field.options[field.value].value;
+	var y             = 50;
+	var x             = layout.x - 1;
+	var scrollBtnY    = this.form.height - 70;
+	var scrollClass   = true === isClipping ? '' : 'hide';
+	var down          = options.g().attr({ 'class':'field scroll ' + scrollClass, 'transform':'translate('+this.form.width/2+','+scrollBtnY+')' });
+	var scrolling     = true;
+	var downTarget    = down.rect(0,0,layout.width/2, fieldHeight).attr({ 'class':'touchTarget' });
+	var downText      = down.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
+	var up            = options.g().attr({ 'class':'field scroll ' + scrollClass, 'transform':'translate('+layout.x+','+scrollBtnY+')' });
+	var upTarget      = up.rect(0,0,layout.width/2, fieldHeight).attr({ 'class':'touchTarget' });
+	var upText        = up.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
+	// update icons
+	upText.node.innerHTML 	= '&#xf077';
+	downText.node.innerHTML = '&#xf078';
+
+	// Scrolling logic
+	var scrollDownStart = function(){ scrolling = true; scrollDown(); };
+	var scrollStop 		= function(){ scrolling = false; };
+	var scrollDown 		= function(){
+		var y = fields.data('y') - (fieldHeight + 1);
+		var threshold = -(_.size(field.options) - Math.floor(fieldsHeight/40)) * (fieldHeight + 1); // num of fields minus num of fields possible to show time field height
+		if(Math.ceil(y) >= threshold){
+			fields.animate({'transform':'translate(0,'+y+')'}, 100, mina.easeout, function(){
+				if(scrolling) scrollDown();
+			});
+			fields.data('y',y);
+		}
+
+	};
+
+	var scrollUpStart = function(){ scrolling = true; scrollUp(); };
+	var scrollUp 	  = function(){
+		var y = fields.data('y') + (fieldHeight + 1);
+		if(Math.floor(y) <= 0){
+			fields.animate({'transform':'translate(0,'+y+')'}, 100, mina.easeout, function(){
+				if(scrolling) scrollUp();
+			});
+			fields.data('y',y);
+		}
+	};
+
+	down.mousedown(scrollDownStart);
+	down.mouseup(scrollStop);
+	up.mousedown(scrollUpStart);
+	up.mouseup(scrollStop);
+
+	// position options container
 	options.attr({ 'transform':'translate('+this.form.width+',0)' });
 
 	// option fields
 	_.each(field.options, function(option, k){
 
 		var fieldGroup  = fields.g().attr({ 'class':'field', 'transform':'translate('+x+','+y+')' });
-		var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
-		var fieldText   = fieldGroup.text(40,20, option.name).attr({ 'class':'value' });
+		var fieldTarget = fieldGroup.rect(0,0,layout.width, fieldHeight).attr({ 'class':'touchTarget' });
+		var fieldText   = fieldGroup.text(fieldHeight,fieldHeight/2, option.name).attr({ 'class':'value' });
 		var klass       = option.value === selected ? 'check selected' : 'check';
 		var check       = fieldGroup.g().attr({ 'class':klass});
-		var checkTarget = check.rect(0,0,40,40).attr({ 'class':'touchTarget' });
-		var checkMark   = check.text(10,20,'*').attr({ 'class':'value' });
+		var checkTarget = check.rect(0,0,fieldHeight,fieldHeight).attr({ 'class':'touchTarget' });
+		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
 		checkMark.node.innerHTML = '&#xf00c';
-		y += 41;
+		y += fieldHeight + 1;
 
 		check.click(function(){ 
 			field.value = k;

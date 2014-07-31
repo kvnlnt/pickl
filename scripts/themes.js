@@ -18,7 +18,7 @@ Pickl.prototype.themes = (function() {
 	themes.zen.titleColor            = '#FFFFFF';
 	themes.zen.buttonTextColor       = '#999999';
 	themes.zen.buttonTextColorOver   = '#FFFFFF';
-	themes.zen.buttonStroke          = '#333333';
+	themes.zen.buttonStroke          = '';
 	themes.zen.modalBackground       = '#000000';
 
 	return themes;
@@ -57,7 +57,8 @@ Pickl.prototype.themeLoad = function(){
 		css += '.pickl .field .title { font-size: .7rem; opacity: 0.5; text-anchor: end; }';
 		css += '.pickl .field .value { text-anchor:start; }';
 		css += '.pickl .field .check { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .2; cursor: pointer; }';
-		css += '.pickl .field .check.selected, .pickl .field .check:hover { opacity: 1; }';
+		css += '.pickl .scroll { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .8; cursor: pointer; }';
+		css += '.pickl .field .check.selected, .pickl .field .check:hover, .pickl .scroll:hover { opacity: 1; }';
 
 		// overrides
 		css += '.pickl .background { fill: '+style.background+'; } ';
