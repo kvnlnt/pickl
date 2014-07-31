@@ -225,10 +225,10 @@ Pickl.prototype.renderOptions = function(field){
 	var scrollClass   = true === isClipping ? '' : 'hide';
 	var down          = options.g().attr({ 'class':'field scroll ' + scrollClass, 'transform':'translate('+this.form.width/2+','+scrollBtnY+')' });
 	var scrolling     = true;
-	var downTarget    = down.rect(0,0,layout.width/2, fieldHeight).attr({ 'class':'touchTarget' });
+	var downTarget    = down.rect(0,0,layout.width/2-2, fieldHeight).attr({ 'class':'touchTarget' });
 	var downText      = down.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
 	var up            = options.g().attr({ 'class':'field scroll ' + scrollClass, 'transform':'translate('+layout.x+','+scrollBtnY+')' });
-	var upTarget      = up.rect(0,0,layout.width/2, fieldHeight).attr({ 'class':'touchTarget' });
+	var upTarget      = up.rect(0,0,layout.width/2-2, fieldHeight).attr({ 'class':'touchTarget' });
 	var upText        = up.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
 	// update icons
@@ -425,6 +425,7 @@ Pickl.prototype.themeLoad = function(){
 		css += '.pickl .field .value { text-anchor:start; }';
 		css += '.pickl .field .check { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .2; cursor: pointer; }';
 		css += '.pickl .scroll { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .8; cursor: pointer; }';
+		css += '.pickl .scroll .value { text-anchor:middle; }';
 		css += '.pickl .field .check.selected, .pickl .field .check:hover, .pickl .scroll:hover { opacity: 1; }';
 
 		// overrides
