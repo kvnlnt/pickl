@@ -148,6 +148,9 @@ Pickl.prototype.renderOptions = function(field){
 	// position options container
 	options.attr({ 'transform':'translate('+this.form.width+',0)' });
 
+	// track selected index
+	var selectedIndexCounter = 1;
+
 	// option fields
 	_.each(field.options, function(option, k){
 
@@ -160,8 +163,10 @@ Pickl.prototype.renderOptions = function(field){
 		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
 		if(option.value === selected){
-			selectedIndex = k;
-		}
+			selectedIndex = selectedIndexCounter;
+		};
+
+		selectedIndexCounter += 1;
 
 		checkMark.node.innerHTML = '&#xf00c';
 		y += fieldHeight + 1;
@@ -177,6 +182,7 @@ Pickl.prototype.renderOptions = function(field){
 	});
 
 	// auto scroll to selected item if it's hidden
+	console.log(selectedIndex, fieldsShowing);
 	if(selectedIndex > fieldsShowing){
 		var y = -(selectedIndex - fieldsShowing) * (fieldHeight + 1);
 		fields.attr({'transform':'translate(0,'+y+')'});
