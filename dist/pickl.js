@@ -224,11 +224,11 @@ Pickl.prototype.renderOptions = function(field){
 	var x             = layout.x - 1;
 	var scrollBtnY    = this.form.height - 70;
 	var scrollClass   = true === isClipping ? '' : 'hide';
-	var down          = options.g().attr({ 'class':'field scroll ' + scrollClass, 'transform':'translate('+this.form.width/2+','+scrollBtnY+')' });
+	var down          = options.g().attr({ 'class':'field button scroll ' + scrollClass, 'transform':'translate('+this.form.width/2+','+scrollBtnY+')' });
 	var scrolling     = true;
 	var downTarget    = down.rect(0,0,layout.width/2-2, fieldHeight).attr({ 'class':'touchTarget' });
 	var downText      = down.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
-	var up            = options.g().attr({ 'class':'field scroll ' + scrollClass, 'transform':'translate('+layout.x+','+scrollBtnY+')' });
+	var up            = options.g().attr({ 'class':'field button scroll ' + scrollClass, 'transform':'translate('+layout.x+','+scrollBtnY+')' });
 	var upTarget      = up.rect(0,0,layout.width/2-2, fieldHeight).attr({ 'class':'touchTarget' });
 	var upText        = up.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
@@ -276,7 +276,7 @@ Pickl.prototype.renderOptions = function(field){
 	// option fields
 	_.each(field.options, function(option, k){
 
-		var fieldGroup  = fields.g().attr({ 'class':'field', 'transform':'translate('+x+','+y+')' });
+		var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+x+','+y+')' });
 		var fieldTarget = fieldGroup.rect(0,0,layout.width, fieldHeight).attr({ 'class':'touchTarget' });
 		var fieldText   = fieldGroup.text(fieldHeight,fieldHeight/2, option.name).attr({ 'class':'value' });
 		var klass       = option.value === selected ? 'check selected' : 'check';
@@ -293,7 +293,7 @@ Pickl.prototype.renderOptions = function(field){
 		checkMark.node.innerHTML = '&#xf00c';
 		y += fieldHeight + 1;
 
-		check.click(function(){ 
+		fieldGroup.click(function(){ 
 			field.value = k;
 			options.animate({ 'transform':'translate('+this.form.width+',0)'}, 200, mina.easeout, function(){ this.remove(); });
 			that.displayField(option.disable, false);
@@ -431,7 +431,7 @@ Pickl.prototype.themeLoad = function(){
 		css += '.pickl .field .check { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .2; cursor: pointer; }';
 		css += '.pickl .scroll { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .8; cursor: pointer; }';
 		css += '.pickl .scroll .value { text-anchor:middle; }';
-		css += '.pickl .field .check.selected, .pickl .field .check:hover, .pickl .scroll:hover { opacity: 1; }';
+		css += '.pickl .field .check.selected, .pickl .field:hover .check, .pickl .scroll:hover { opacity: 1; }';
 
 		// overrides
 		css += '.pickl .background { fill: '+style.background+'; } ';

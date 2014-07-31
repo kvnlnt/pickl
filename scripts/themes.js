@@ -59,7 +59,7 @@ Pickl.prototype.themeLoad = function(){
 		css += '.pickl .field .check { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .2; cursor: pointer; }';
 		css += '.pickl .scroll { font-family:\'FontAwesome\'; font-size: 1.25rem; text-anchor:middle; opacity: .8; cursor: pointer; }';
 		css += '.pickl .scroll .value { text-anchor:middle; }';
-		css += '.pickl .field .check.selected, .pickl .field .check:hover, .pickl .scroll:hover { opacity: 1; }';
+		css += '.pickl .field .check.selected, .pickl .field:hover .check, .pickl .scroll:hover { opacity: 1; }';
 
 		// overrides
 		css += '.pickl .background { fill: '+style.background+'; } ';
