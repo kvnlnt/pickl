@@ -304,7 +304,6 @@ Pickl.prototype.renderOptions = function(field){
 	});
 
 	// auto scroll to selected item if it's hidden
-	console.log(selectedIndex, fieldsShowing);
 	if(selectedIndex > fieldsShowing){
 		var y = -(selectedIndex - fieldsShowing) * (fieldHeight + 1);
 		fields.attr({'transform':'translate(0,'+y+')'});
