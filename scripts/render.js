@@ -90,12 +90,14 @@ Pickl.prototype.renderOptions = function(field){
 	var title         = options.text(that.form.width/2, 27, field.name).attr('class','title options');
 	var fieldsHeight  = that.form.height-140;
 	var isClipping    = (_.size(field.options) * 40) > fieldsHeight;
-	var fieldHeight   = isClipping ? fieldsHeight/Math.floor(fieldsHeight/40) : 40;
-	var fieldMaskRect = options.rect(layout.x,50,layout.width, fieldsHeight + (Math.floor(fieldsHeight/40))).attr({'fill':'#FFFFFF'});
+	var fieldsShowing = Math.floor(fieldsHeight/40);
+	var fieldHeight   = isClipping ? fieldsHeight/fieldsShowing : 40;
+	var fieldMaskRect = options.rect(layout.x,50,layout.width, fieldsHeight + (fieldsShowing)).attr({'fill':'#FFFFFF'});
 	var fieldMask     = options.mask().add(fieldMaskRect).attr({'class':'mask'});
 	var fieldWrapper  = options.g().attr({ 'class':'fields', mask:fieldMask });
 	var fields        = fieldWrapper.g().data('y',0);
 	var selected      = field.options[field.value].value;
+	var selectedIndex = 0;
 	var y             = 50;
 	var x             = layout.x - 1;
 	var scrollBtnY    = this.form.height - 70;
@@ -117,7 +119,7 @@ Pickl.prototype.renderOptions = function(field){
 	var scrollStop 		= function(){ scrolling = false; };
 	var scrollDown 		= function(){
 		var y = fields.data('y') - (fieldHeight + 1);
-		var threshold = -(_.size(field.options) - Math.floor(fieldsHeight/40)) * (fieldHeight + 1); // num of fields minus num of fields possible to show time field height
+		var threshold = -(_.size(field.options) - fieldsShowing) * (fieldHeight + 1); // num of fields minus num of fields possible to show time field height
 		if(Math.ceil(y) >= threshold){
 			fields.animate({'transform':'translate(0,'+y+')'}, 100, mina.easeout, function(){
 				if(scrolling) scrollDown();
@@ -157,6 +159,10 @@ Pickl.prototype.renderOptions = function(field){
 		var checkTarget = check.rect(0,0,fieldHeight,fieldHeight).attr({ 'class':'touchTarget' });
 		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
+		if(option.value === selected){
+			selectedIndex = k;
+		}
+
 		checkMark.node.innerHTML = '&#xf00c';
 		y += fieldHeight + 1;
 
@@ -169,6 +175,15 @@ Pickl.prototype.renderOptions = function(field){
 		}, that);
 
 	});
+
+	// auto scroll to selected item if it's hidden
+	if(selectedIndex > fieldsShowing){
+		var y = -(selectedIndex - fieldsShowing) * (fieldHeight + 1);
+		fields.attr({'transform':'translate(0,'+y+')'});
+		fields.data('y',y);
+
+	}
+	console.log(selectedIndex, fieldsShowing);
 
 	return options;
 
