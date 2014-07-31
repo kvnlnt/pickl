@@ -304,7 +304,6 @@ Pickl.prototype.renderOptions = function(field){
 		fields.data('y',y);
 
 	}
-	console.log(selectedIndex, fieldsShowing);
 
 	return options;
 
