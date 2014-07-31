@@ -40,27 +40,28 @@ var Pickl = function(options){
 					}
 				}
 			},
-			longPick:{
-				name:'long pick',
-				value:'1',
+			root:{
+				name:'root',
+				value:'c_n',
 				enabled:true,
 				options:{
-					1:{ name:'1', value:'1'},
-					2:{ name:'2', value:'2 '},
-					3:{ name:'3', value:'3 '},
-					4:{ name:'4', value:'4 '},
-					5:{ name:'5', value:'5 '},
-					6:{ name:'6', value:'6 '},
-					7:{ name:'7', value:'7 '},
-					8:{ name:'8', value:'8 '},
-					9:{ name:'9', value:'9 '},
-					10:{ name:'10', value:'10 '},
-					11:{ name:'11', value:'11 '},
-					12:{ name:'12', value:'12 '},
-					13:{ name:'13', value:'13 '},
-					14:{ name:'14', value:'14 '},
-					15:{ name:'15', value:'15 '},
-					16:{ name:'16', value:'16 '},
+					c_n:{ name:'C',  value : 'C' },
+					c_s:{ name:'C#', value : 'C#' },
+					d_f:{ name:'Db', value : 'Db' },
+					d_n:{ name:'D',  value : 'D' },
+					d_s:{ name:'D#', value : 'D#' },
+					e_f:{ name:'Eb', value : 'Eb' },
+					e_n:{ name:'E',  value :'E' },
+					f_n:{ name:'F',  value :'F' },
+					f_s:{ name:'F#', value :'F#' },
+					g_b:{ name:'Gb', value :'Gb' },
+					g_n:{ name:'G',  value :'G' },
+					g_s:{ name:'G#', value :'G#' },
+					a_f:{ name:'Ab', value :'Ab' },
+					a_n:{ name:'A',  value :'A' },
+					a_s:{ name:'A#', value :'A#' },
+					b_b:{ name:'Bb', value :'Bb' },
+					b_n:{ name:'B',  value :'B' }
 				}
 			},
 			instrument:{
@@ -269,6 +270,9 @@ Pickl.prototype.renderOptions = function(field){
 	// position options container
 	options.attr({ 'transform':'translate('+this.form.width+',0)' });
 
+	// track selected index
+	var selectedIndexCounter = 1;
+
 	// option fields
 	_.each(field.options, function(option, k){
 
@@ -281,8 +285,10 @@ Pickl.prototype.renderOptions = function(field){
 		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'*').attr({ 'class':'value' });
 
 		if(option.value === selected){
-			selectedIndex = k;
-		}
+			selectedIndex = selectedIndexCounter;
+		};
+
+		selectedIndexCounter += 1;
 
 		checkMark.node.innerHTML = '&#xf00c';
 		y += fieldHeight + 1;
@@ -298,6 +304,7 @@ Pickl.prototype.renderOptions = function(field){
 	});
 
 	// auto scroll to selected item if it's hidden
+	console.log(selectedIndex, fieldsShowing);
 	if(selectedIndex > fieldsShowing){
 		var y = -(selectedIndex - fieldsShowing) * (fieldHeight + 1);
 		fields.attr({'transform':'translate(0,'+y+')'});
