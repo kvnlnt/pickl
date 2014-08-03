@@ -24,6 +24,16 @@ var Pickl = function(options){
 
 		title:'Options',
 		fields:{
+			order_test:{
+				name:'order',
+				value:'two',
+				enabled:true,
+				options:{
+					'two':{ name:'two', value:'two' },
+					'1':{ name:'1', value:'1' }
+
+				}
+			},
 			orientation:{
 				name:'orientation',
 				value:'righty',
@@ -364,7 +374,7 @@ Pickl.prototype.displayField = function(fields, enabled){
 	var picks = {};
 
 	_.each(this.config.fields, function(field){
-		if(field.enabled) picks[field.name] = field.options[field.value].value;
+		if(field.enabled) picks[field.name] = field.options[field.value];
 	});
 	
 	this.callback(picks);

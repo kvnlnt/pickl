@@ -4,6 +4,16 @@ Pickl.prototype.Config = (function(){
 
 		title:'Options',
 		fields:{
+			order_test:{
+				name:'order',
+				value:'two',
+				enabled:true,
+				options:{
+					'two':{ name:'two', value:'two' },
+					'1':{ name:'1', value:'1' }
+
+				}
+			},
 			orientation:{
 				name:'orientation',
 				value:'righty',
