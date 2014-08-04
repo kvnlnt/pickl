@@ -75,6 +75,17 @@ Pickl.prototype.renderFields = function(){
 
 		}
 
+		if(field.type === 'button'){
+
+			var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+layout.x+','+y+')' });
+			var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
+			var fieldTitle  = fieldGroup.text(layout.width/2,20, field.text).attr({ 'class':'text' });
+			y 			   += 41;
+
+			fieldGroup.click(field.callback,that);
+
+		}
+
 	});
 
 	return fields.selectAll('.field');

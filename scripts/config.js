@@ -4,6 +4,11 @@ Pickl.prototype.Config = (function(){
 
 		title:'Options',
 		fields:{
+			remove:{
+				type:'button',
+				text:'Remove',
+				callback:function(){ alert('delete'); }
+			},
 			order_test:{
 				name:'order',
 				value:'two',

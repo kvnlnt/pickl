@@ -24,6 +24,11 @@ var Pickl = function(options){
 
 		title:'Options',
 		fields:{
+			remove:{
+				type:'button',
+				text:'Remove',
+				callback:function(){ alert('delete'); }
+			},
 			order_test:{
 				name:'order',
 				value:'two',
@@ -204,6 +209,17 @@ Pickl.prototype.renderFields = function(){
 
 			var click = void 0 === field.callback || null === field.callback ? function(){that.displayOptions(field)} : field.callback;
 			fieldGroup.click(click,that);
+
+		}
+
+		if(field.type === 'button'){
+
+			var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+layout.x+','+y+')' });
+			var fieldTarget = fieldGroup.rect(0,0,layout.width, 40).attr({ 'class':'touchTarget' });
+			var fieldTitle  = fieldGroup.text(layout.width/2,20, field.text).attr({ 'class':'text' });
+			y 			   += 41;
+
+			fieldGroup.click(field.callback,that);
 
 		}
 
