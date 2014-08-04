@@ -237,14 +237,10 @@ Pickl.prototype.renderOptions = function(field){
 	var down          = options.g().attr({ 'class':'field button scroll ' + scrollClass, 'transform':'translate('+this.form.width/2+','+scrollBtnY+')' });
 	var scrolling     = true;
 	var downTarget    = down.rect(0,0,layout.width/2-2, fieldHeight).attr({ 'class':'touchTarget' });
-	var downText      = down.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
+	var downText      = down.text(layout.width/4,fieldHeight/2,'\uf078').attr({ 'class':'value' });
 	var up            = options.g().attr({ 'class':'field button scroll ' + scrollClass, 'transform':'translate('+layout.x+','+scrollBtnY+')' });
 	var upTarget      = up.rect(0,0,layout.width/2-2, fieldHeight).attr({ 'class':'touchTarget' });
-	var upText        = up.text(layout.width/4,fieldHeight/2,'*').attr({ 'class':'value' });
-
-	// update icons
-	upText.node.innerHTML 	= '&#xf077';
-	downText.node.innerHTML = '&#xf078';
+	var upText        = up.text(layout.width/4,fieldHeight/2,'\uf077').attr({ 'class':'value' });
 
 	// Scrolling logic
 	var scrollDownStart = function(){ scrolling = true; scrollDown(); };
@@ -292,15 +288,13 @@ Pickl.prototype.renderOptions = function(field){
 		var klass       = option.value === selected ? 'check selected' : 'check';
 		var check       = fieldGroup.g().attr({ 'class':klass});
 		var checkTarget = check.rect(0,0,fieldHeight,fieldHeight).attr({ 'class':'touchTarget' });
-		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'*').attr({ 'class':'value' });
+		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'\uf00c').attr({ 'class':'value' });
 
 		if(option.value === selected){
 			selectedIndex = selectedIndexCounter;
 		};
 
 		selectedIndexCounter += 1;
-
-		checkMark.node.innerHTML = '&#xf00c';
 		y += fieldHeight + 1;
 
 		fieldGroup.click(function(){ 
