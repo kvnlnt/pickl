@@ -1,7 +1,12 @@
 module.exports = {
     dist: {
-      files: {
-        'dist/pickl.min.js': ['dist/pickl.js']
-      }
+		options: {
+			beautify : {
+			    ascii_only : true
+			} 		
+		},
+		files: {
+			'dist/pickl.min.js': ['dist/pickl.js']
+		}
     }
 }
