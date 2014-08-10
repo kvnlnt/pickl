@@ -1,5 +1,5 @@
-[submodule "modules/hammerjs"]
-	path = modules/hammerjs
+[submodule "modules/hammer"]
+	path = modules/hammer
 	url = https://github.com/hammerjs/hammer.js.git
 [submodule "modules/jquery"]
 	path = modules/jquery
@@ -10,7 +10,3 @@
 [submodule "modules/snapsvg"]
 	path = modules/snapsvg
 	url = https://github.com/adobe-webplatform/Snap.svg.git
-
-[submodule "modules/hammer"]
-	path = modules/hammer
-	url = https://github.com/hammerjs/hammer.js.git
