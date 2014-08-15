@@ -4,7 +4,6 @@ Pickl.prototype.render = function(){
 	this.pickl.clear();
 	this.pickl.background = this.renderBackground();
 	this.pickl.title      = this.renderTitle();
-	this.pickl.close      = this.renderClose();
 	this.pickl.fields     = this.renderFields();
 
 };
@@ -34,22 +33,6 @@ Pickl.prototype.renderTitle = function(){
 	title.attr({ 'class':'title' });
 
 	return title;
-
-};
-
-Pickl.prototype.renderClose = function(){
-
-	var close  = this.pickl.g().attr('class','button close');
-	var x      = this.form.width * .15 / 2;
-	var y      = (_.size(this.config.fields)-1) * (this.calcFields().height + 1) + 100;
-	var w      = this.form.width * .85;
-	var h      = 50;
-	var target = close.rect(x,y,w,h).attr({ 'class':'touchTarget' });
-	var text   = close.text(this.form.width/2, y + 25, 'done');
-
-	close.click(this.save, this);
-
-	return close;
 
 };
 
@@ -87,6 +70,14 @@ Pickl.prototype.renderFields = function(){
 		}
 
 	});
+
+	var close  = this.pickl.g().attr({'class':'button close', 'transform':'translate('+layout.x+','+y+')'});
+	var w      = this.form.width * .85;
+	var h      = 50;
+	var target = close.rect(0,0,w,h).attr({ 'class':'touchTarget' });
+	var text   = close.text(layout.width/2, 25, 'done');
+
+	close.click(this.save, this);
 
 	return fields.selectAll('.field');
 
