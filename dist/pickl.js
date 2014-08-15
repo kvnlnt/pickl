@@ -238,6 +238,48 @@ Pickl.prototype.renderOptions = function(field){
 	var selectedIndex = 0;
 	var y             = 50;
 	var x             = layout.x - 1;
+
+	// position options container
+	options.attr({ 'transform':'translate('+this.form.width+',0)' });
+
+	// track selected index
+	var selectedIndexCounter = 1;
+
+	// option fields
+	_.each(field.options, function(option, k){
+
+		var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+x+','+y+')' });
+		var fieldTarget = fieldGroup.rect(0,0,layout.width, fieldHeight).attr({ 'class':'touchTarget' });
+		var fieldText   = fieldGroup.text(fieldHeight,fieldHeight/2, option.name).attr({ 'class':'value' });
+		var klass       = option.value === selected ? 'check selected' : 'check';
+		var check       = fieldGroup.g().attr({ 'class':klass});
+		var checkTarget = check.rect(0,0,fieldHeight,fieldHeight).attr({ 'class':'touchTarget' });
+		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'\uf00c').attr({ 'class':'value' });
+
+		if(option.value === selected){
+			selectedIndex = selectedIndexCounter;
+		};
+
+		selectedIndexCounter += 1;
+		y += fieldHeight + 1;
+
+		fieldGroup.click(function(){ 
+			field.value = k;
+			options.animate({ 'transform':'translate('+this.form.width+',0)'}, 200, mina.easeout, function(){ this.remove(); });
+			that.displayField(option.disable, false);
+			that.displayField(option.enable, true);
+			that.render();
+		}, that);
+
+	});
+
+	// add Title
+	var titleBG = options.rect(0,0,that.form.width, 50).attr({'class':'background'});
+	var title   = options.text(that.form.width/2, 27, field.name).attr('class','title options');
+
+
+	// generate scrolling
+	var scrollBG      = options.rect(0,(fieldsHeight + fieldsShowing + 50),that.form.width,90).attr({'class':'background'});
 	var scrollBtnY    = this.form.height - 70;
 	var scrollClass   = true === isClipping ? '' : 'hide';
 	var down          = options.g().attr({ 'class':'field button scroll ' + scrollClass, 'transform':'translate('+this.form.width/2+','+scrollBtnY+')' });
@@ -278,44 +320,6 @@ Pickl.prototype.renderOptions = function(field){
 	down.mouseup(scrollStop);
 	up.mousedown(scrollUpStart);
 	up.mouseup(scrollStop);
-
-	// position options container
-	options.attr({ 'transform':'translate('+this.form.width+',0)' });
-
-	// track selected index
-	var selectedIndexCounter = 1;
-
-	// option fields
-	_.each(field.options, function(option, k){
-
-		var fieldGroup  = fields.g().attr({ 'class':'field button', 'transform':'translate('+x+','+y+')' });
-		var fieldTarget = fieldGroup.rect(0,0,layout.width, fieldHeight).attr({ 'class':'touchTarget' });
-		var fieldText   = fieldGroup.text(fieldHeight,fieldHeight/2, option.name).attr({ 'class':'value' });
-		var klass       = option.value === selected ? 'check selected' : 'check';
-		var check       = fieldGroup.g().attr({ 'class':klass});
-		var checkTarget = check.rect(0,0,fieldHeight,fieldHeight).attr({ 'class':'touchTarget' });
-		var checkMark   = check.text(fieldHeight/4,fieldHeight/2,'\uf00c').attr({ 'class':'value' });
-
-		if(option.value === selected){
-			selectedIndex = selectedIndexCounter;
-		};
-
-		selectedIndexCounter += 1;
-		y += fieldHeight + 1;
-
-		fieldGroup.click(function(){ 
-			field.value = k;
-			options.animate({ 'transform':'translate('+this.form.width+',0)'}, 200, mina.easeout, function(){ this.remove(); });
-			that.displayField(option.disable, false);
-			that.displayField(option.enable, true);
-			that.render();
-		}, that);
-
-	});
-
-	// add Title
-	var titleBG = options.rect(0,0,that.form.width, 50).attr({'class':'background'});
-	var title   = options.text(that.form.width/2, 27, field.name).attr('class','title options');
 
 	// auto scroll to selected item if it's hidden
 	if(selectedIndex > fieldsShowing){
