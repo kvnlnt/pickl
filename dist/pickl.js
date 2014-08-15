@@ -178,11 +178,11 @@ Pickl.prototype.renderClose = function(){
 
 	var close  = this.pickl.g().attr('class','button close');
 	var x      = this.form.width * .15 / 2;
-	var y      = this.form.height - 70;
+	var y      = _.size(this.config.fields) * (this.calcFields().height + 1) + 70;
 	var w      = this.form.width * .85;
 	var h      = 50;
 	var target = close.rect(x,y,w,h).attr({ 'class':'touchTarget' });
-	var text   = close.text(this.form.width/2, y + 25, 'close');
+	var text   = close.text(this.form.width/2, y + 25, 'done');
 
 	close.click(this.save, this);
 
@@ -235,7 +235,6 @@ Pickl.prototype.renderOptions = function(field){
 	var layout        = that.calcLayout().fields;
 	var options       = this.pickl.g().attr({ 'class':'options' });
 	var background    = options.rect(0,0,that.form.width, that.form.height).attr('class','background');
-	var title         = options.text(that.form.width/2, 27, field.name).attr('class','title options');
 	var fieldsHeight  = that.form.height-140;
 	var isClipping    = (_.size(field.options) * 40) > fieldsHeight;
 	var fieldsShowing = Math.floor(fieldsHeight/40);
@@ -322,6 +321,10 @@ Pickl.prototype.renderOptions = function(field){
 		}, that);
 
 	});
+
+	// add Title
+	var titleBG = options.rect(0,0,that.form.width, 50).attr({'class':'background'});
+	var title   = options.text(that.form.width/2, 27, field.name).attr('class','title options');
 
 	// auto scroll to selected item if it's hidden
 	if(selectedIndex > fieldsShowing){
