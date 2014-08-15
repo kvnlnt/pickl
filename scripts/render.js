@@ -41,7 +41,7 @@ Pickl.prototype.renderClose = function(){
 
 	var close  = this.pickl.g().attr('class','button close');
 	var x      = this.form.width * .15 / 2;
-	var y      = _.size(this.config.fields) * (this.calcFields().height + 1) + 70;
+	var y      = (_.size(this.config.fields)-1) * (this.calcFields().height + 1) + 100;
 	var w      = this.form.width * .85;
 	var h      = 50;
 	var target = close.rect(x,y,w,h).attr({ 'class':'touchTarget' });
