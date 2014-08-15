@@ -71,7 +71,7 @@ Pickl.prototype.renderFields = function(){
 
 	});
 
-	var close  = this.pickl.g().attr({'class':'button close', 'transform':'translate('+layout.x+','+y+')'});
+	var close  = this.pickl.g().attr({'class':'button close', 'transform':'translate('+layout.x+','+(y+20)+')'});
 	var w      = this.form.width * .85;
 	var h      = 50;
 	var target = close.rect(0,0,w,h).attr({ 'class':'touchTarget' });
