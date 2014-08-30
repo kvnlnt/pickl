@@ -129,8 +129,17 @@ Pickl.prototype.renderOptions = function(field){
 		fieldGroup.click(function(){ 
 			field.value = k;
 			options.animate({ 'transform':'translate('+this.form.width+',0)'}, 200, mina.easeout, function(){ this.remove(); });
-			that.displayField(option.disable, false);
-			that.displayField(option.enable, true);
+			
+			// disable fields on click
+			_.each(option.disable, function(d){
+				that.displayField(d, false);
+			});
+			
+			// enable fields on click
+			_.each(option.enable, function(d){
+				that.displayField(d, true);
+			});
+
 			that.render();
 		}, that);
 
